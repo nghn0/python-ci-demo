@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # ✅ Grant permission to modify repository contents
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -19,8 +22,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}  # ✅ Use ref_name instead of github.ref
+          release_name: Release ${{ github.ref_name }}
           body_path: CHANGELOG.md
           draft: false
           prerelease: false
